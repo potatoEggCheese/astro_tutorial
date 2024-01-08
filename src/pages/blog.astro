@@ -1,17 +1,31 @@
+---
+import Footer from "../components/Footer.astro";
+import Navigatrion from "../components/Navigatrion.astro";
+import "../styles/global.css";
+const allPosts = await Astro.glob("./posts/*.md");
+const pageTitle = "私のAstro学習ブログ";
+import BlogPost from "../components/BlogPost.astro";
+---
+
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
+    <title>{pageTitle}</title>
   </head>
   <body>
-    <a href="/">ホーム</a>
-    <a href="/about/">概要</a>
-    <a href="/blog/">ブログ</a>
-
+    <Navigatrion />
     <h1>私のAstro学習ブログ</h1>
     <p>ここには、私がAstroを学んでいく旅の様子を投稿します。</p>
+    <ul>
+      {
+        allPosts.map((post) => (
+          <BlogPost url={post.url} title={post.frontmatter.title} />
+        ))
+      }
+    </ul>
+    <Footer />
   </body>
 </html>
